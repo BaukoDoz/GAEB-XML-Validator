@@ -1,3 +1,7 @@
+### NOTICE
+
+**This repository is just my personal learning field to deepen my knowledge about Python, Git, GitHub, XML, JSON and VSCode.**
+
 # GAEB-XML-Validator
 GAEB-XML-Checker for the comparison of GAEB exchange files with the GAEB schema.
 

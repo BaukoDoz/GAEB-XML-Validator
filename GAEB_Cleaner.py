@@ -33,8 +33,11 @@ def format_xml_minidom(file_path, new_file_path):
     # Save XML file with an indentation of 4 characters
     pretty_xml = dom.toprettyxml(indent="    ", encoding='UTF-8')
 
+    # Remove extra empty lines
+    pretty_xml = '\n'.join([line for line in pretty_xml.decode('utf-8').split('\n') if line.strip()])
+
     with open(new_file_path, 'wb') as file:
-        file.write(pretty_xml)
+        file.write(pretty_xml.encode('utf-8'))
 
 # Call the function
 format_xml_minidom('GAEB-XML_examples/example.X83', 'new_GAEB_file.X83')

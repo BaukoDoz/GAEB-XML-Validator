@@ -37,4 +37,4 @@ def format_xml_minidom(file_path, new_file_path):
         file.write(pretty_xml)
 
 # Call the function
-format_xml_minidom('your_file.X83', 'new_file.X83')
+format_xml_minidom('GAEB-XML_examples/example.X83', 'new_GAEB_file.X83')

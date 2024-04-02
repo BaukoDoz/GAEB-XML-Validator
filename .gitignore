@@ -2,3 +2,6 @@ GAEB_DA_XML_*.xsd
 validation_results.json
 new_GAEB_file.X83
 .DS_Store
+download/**
+GAEB-XSD_schema_files/**
+!GAEB-XSD_schema_files/**/*.md

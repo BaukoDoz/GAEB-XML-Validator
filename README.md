@@ -7,7 +7,7 @@ GAEB-XML-Checker for the comparison of GAEB exchange files with the GAEB schema.
 
 The **GAEB-XML-Validator** is a simple script for checking the correctness of GAEB (Gemeinsamer Ausschuss Elektronik im Bauwesen) exchange files. By using GAEB schema files, this script ensures that your XML files comply with the specified standards.
 
-The GAEB schema files must be downloaded separately from the [GAEB website](https://www.gaeb.de/de/service/downloads/gaeb-datenaustausch/)
+The GAEB schema files must be downloaded separately from the [GAEB website](https://www.gaeb.de/de/service/downloads/gaeb-datenaustausch/). 
 Alternatively, you can use the script "GAEB-XSD_downloader.py" to download the files.
 
 ## Functions

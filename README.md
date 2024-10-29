@@ -24,7 +24,7 @@ pip install lxml xmlschema
 1. Clone the repository to your local machine:
 
 ```bash
-git clone <URL of your repository>
+git clone https://github.com/BaukoDoz/GAEB-XML-Validator
 ```
 
 2. Navigate into the project folder:
@@ -112,7 +112,7 @@ pip install lxml xmlschema
 1. Klonen Sie das Repository auf Ihren lokalen Rechner:
 
 ```bash
-git clone <URL Ihres Repositories>
+git clone https://github.com/BaukoDoz/GAEB-XML-Validator
 ```
 
 2. Navigieren Sie in den Projektordner:

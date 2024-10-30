@@ -16,3 +16,4 @@ new_GAEB_file.X83
 download/**
 GAEB-XSD_schema_files/**
 !GAEB-XSD_schema_files/**/*.md
+GAEB-XML_examples/Pruefdatei*.*

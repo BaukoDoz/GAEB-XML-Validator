@@ -6,9 +6,9 @@
         <VersDate>2021-05</VersDate>
         <Date>2024-02-22</Date>
         <Time>18:56:38</Time>
-        <ProgSystem>/ any GAEB converter</ProgSystem>
-        <ProgName>any AVA software</ProgName>
-        <Certific>not available</Certific>
+        <ProgSystem>python3</ProgSystem>
+        <ProgName>python3</ProgName>
+        <Certific>not Available</Certific>
     </GAEBInfo>
     <PrjInfo>
         <NamePrj>lot_number</NamePrj>
@@ -26,9 +26,11 @@
             <OutlineAddText>
                 <span>Vorbemerkungstext</span>
             </OutlineAddText>
-            <DetailAddText>
-                <p style="margin-top:0pt;margin-bottom:0pt;width:482pt;font-size:10pt;">
-                    <span style="font-family:Arial;font-size:10pt;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.</span>
+            <DetailAddText style="margin-top:0pt;margin-bottom:0pt;width:482pt;font-size:10pt;">
+                <p>
+                    <span>Lorem ipsum dolor sit amet,
+                         consectetur adipiscing elit. Sed non risus.
+                          Suspendisse lectus tortor, dignissim sit amet, <b/>adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.</span>
                 </p>
             </DetailAddText>
         </AddText>
@@ -95,10 +97,9 @@
                                     <WICNo>Bib_GAEB 01.01.005 </WICNo>
                                     <CompleteText>
                                         <DetailTxt>
-                                            <Text>
-                                                <p
-                                                    style="margin-top:0pt;margin-bottom:0pt;width:284pt;font-size:10pt;">
-                                                    <span style="font-family:Arial;font-size:10pt;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.</span>
+                                            <Text style="margin-top:0pt;margin-bottom:0pt;width:284pt;font-family:Arial;font-size:10pt;">
+                                                <p>
+                                                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.</span>
                                                 </p>
                                             </Text>
                                         </DetailTxt>

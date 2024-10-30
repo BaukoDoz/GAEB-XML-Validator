@@ -1,4 +1,4 @@
 lxml
 xmlschema
 requests
-beautifulsoup4 
+beautifulsoup4

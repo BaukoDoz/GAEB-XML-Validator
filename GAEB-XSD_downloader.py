@@ -4,93 +4,81 @@ import requests
 import zipfile
 from bs4 import BeautifulSoup
 import shutil
+import tempfile
 
 # URL of the webpage you want to access
-url = 'https://www.gaeb.de/de/service/downloads/gaeb-datenaustausch/'
+URL = 'https://www.gaeb.de/de/service/downloads/gaeb-datenaustausch/'
 
-# Path to the current script
-script_path = os.path.dirname(os.path.realpath(__file__))
-
-# Path to save the files
-path = os.path.join(script_path, 'download')
-
-# Path to save the xsd files
-xsd_path = os.path.join(script_path, 'GAEB-XSD_schema_files')
+# Paths to save files
+SCRIPT_PATH = os.path.dirname(os.path.realpath(__file__))
+DOWNLOAD_PATH = os.path.join(tempfile.gettempdir(), 'temp_download')
+XSD_PATH = os.path.join(SCRIPT_PATH, 'GAEB-XSD_schema_files')
 
 # Create directories if they do not exist
-os.makedirs(path, exist_ok=True)
-os.makedirs(xsd_path, exist_ok=True)
+os.makedirs(DOWNLOAD_PATH, exist_ok=True)
+os.makedirs(XSD_PATH, exist_ok=True)
 
 # Function to download and save a file
 def download_file(href, path):
-    # Full path to save the file
     filename = os.path.basename(href)
     full_path = os.path.join(path, filename)
 
     # Only download the file if it does not exist
     if not os.path.exists(full_path):
-        # Download the file
         response = requests.get(href)
-
-        # Ensure the request was successful
         if response.status_code == 200:
-            # Save the file
             with open(full_path, 'wb') as file:
                 file.write(response.content)
-
             print(f"File {filename} has been downloaded and saved.")
 
-            # If it's a zip file, extract it
-            if href.endswith('.zip'):
+            # Extract if it's a zip file
+            if filename.endswith('.zip'):
                 with zipfile.ZipFile(full_path, 'r') as zip_ref:
                     zip_ref.extractall(path)
                     print(f"File {filename} has been extracted.")
 
-# Function to move a file
+# Function to move a file if it doesn't already exist with the same hash
 def move_file(old_file_path, new_file_path):
-    old_file_hash = hashlib.md5(open(old_file_path, 'rb').read()).hexdigest()
+    if not os.path.exists(new_file_path) or hashlib.md5(open(old_file_path, 'rb').read()).hexdigest() != hashlib.md5(open(new_file_path, 'rb').read()).hexdigest():
+        shutil.move(old_file_path, new_file_path)
+        print(f"File {os.path.basename(old_file_path)} has been moved to the 'GAEB-XSD_schema_files'.")
 
-    # If file already exists, check the hash
-    if os.path.exists(new_file_path):
-        new_file_hash = hashlib.md5(open(new_file_path, 'rb').read()).hexdigest()
+# Function to process the download and extraction
+def process_gaeb_xsd_download():
+    # Get the webpage and parse it
+    response = requests.get(URL)
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, 'html.parser')
 
-        # If hashes are the same, do not move the file
-        if old_file_hash == new_file_hash:
-            return
+        # Find and process all .zip and .xsd links
+        for link in soup.find_all('a', href=True):
+            href = link['href']
+            if href.endswith(('.zip', '.xsd')):
+                download_file(href, DOWNLOAD_PATH)
 
-    # Move the file
-    shutil.move(old_file_path, new_file_path)
-    print(f"File {os.path.basename(old_file_path)} has been moved to the 'GAEB-XSD_schema'")
+        # Move all .xsd files to XSD_PATH
+        for root, _, files in os.walk(DOWNLOAD_PATH):
+            for file in files:
+                if file.endswith('.xsd'):
+                    move_file(os.path.join(root, file), os.path.join(XSD_PATH, file))
 
-# Get the webpage
-response = requests.get(url)
-soup = BeautifulSoup(response.text, 'html.parser')
+        # Delete all non-zip files and empty directories in the 'temp_download' directory
+        for root, dirs, files in os.walk(DOWNLOAD_PATH, topdown=False):
+            for file in files:
+                if not file.endswith('.zip'):
+                    os.remove(os.path.join(root, file))
+                    print(f"File {file} has been deleted.")
+            for dir in dirs:
+                dir_path = os.path.join(root, dir)
+                if not os.listdir(dir_path):
+                    os.rmdir(dir_path)
+                    print(f"Directory {dir} has been deleted.")
 
-# Find all links on the webpage
-for link in soup.find_all('a'):
-    href = link.get('href')
-    
-    # Check if link is to a .zip or .xsd file
-    if href.endswith('.zip') or href.endswith('.xsd'):
-        download_file(href, path)
+        # Delete the 'temp_download' directory itself
+        if os.path.exists(DOWNLOAD_PATH):
+            shutil.rmtree(DOWNLOAD_PATH)
+            print(f"Directory 'temp_download' has been deleted.")
 
-# Move all xsd files to GAEB-XSD_schema_files
-for root, dirs, files in os.walk(path):
-    for file in files:
-        if file.endswith('.xsd'):
-            old_file_path = os.path.join(root, file)
-            new_file_path = os.path.join(xsd_path, file)
-            move_file(old_file_path, new_file_path)
-
-# Delete all non-zip files and empty directories in the 'download' directory
-for root, dirs, files in os.walk(path, topdown=False):
-    for file in files:
-        if not file.endswith('.zip'):
-            file_path = os.path.join(root, file)
-            os.remove(file_path)
-            print(f"File {file} has been deleted.")
-    for dir in dirs:
-        dir_path = os.path.join(root, dir)
-        if not os.listdir(dir_path):
-            os.rmdir(dir_path)
-            print(f"Directory {dir} has been deleted.")
+# Allow the script to be used as a module or standalone script
+if __name__ == "__main__":
+    process_gaeb_xsd_download()
